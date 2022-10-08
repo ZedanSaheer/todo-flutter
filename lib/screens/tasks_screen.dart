@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:state_management/screens/add_task_screen.dart';
+import 'package:state_management/widgets/tasks_list.dart';
 
 class TasksScreen extends StatelessWidget {
   const TasksScreen({Key? key}) : super(key: key);
@@ -7,15 +9,22 @@ class TasksScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.lightBlueAccent,
+        floatingActionButton: FloatingActionButton(
+          child: const Icon(Icons.add),
+          onPressed: () => {
+            showModalBottomSheet(
+                context: context, builder: (context) => const AddTaskScreen())
+          },
+        ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.all(40.0),
+              padding: const EdgeInsets.all(30.0),
               child: SafeArea(
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
+                    children: const <Widget>[
                       CircleAvatar(
                         backgroundColor: Colors.white,
                         radius: 30,
@@ -49,46 +58,17 @@ class TasksScreen extends StatelessWidget {
             ),
             Expanded(
               child: Container(
-                height: 200,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(20.0),
                     topRight: Radius.circular(20.0),
                   ),
                 ),
-                child:TasksList() ,
+                child: const TasksList(),
               ),
             ),
           ],
         ));
-  }
-}
-
-class TasksList extends StatelessWidget {
-  const TasksList({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView(children: <Widget>[
-      TaskTile(),
-      TaskTile(),
-    ]);
-  }
-}
-
-class TaskTile extends StatelessWidget {
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      title: Text('This is a list item one'),
-      trailing: Checkbox(
-        onChanged: ((value) => print("Test")),
-        value:false,
-      ),
-    );
   }
 }
